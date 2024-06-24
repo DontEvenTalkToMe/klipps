@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="cheese.ico">
+    <title>DontEvenTalkToMe's Discord Messenger</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #5C8269;
+            margin: 0;
+            box-sizing: border-box;
+            background: linear-gradient(to bottom, #003D32, #045720);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden; /* Prevent scrolling */
+        }
+
+        /* Apply box-sizing to all elements for consistency */
+        * {
+            box-sizing: border-box;
+        }
+
+        .header {
+            width: 100%;
+            height: 65px;
+            background-color: #B0A398;
+            padding: 10px 20px; /* Reduced padding */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed; /* Fix the header at the top */
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000; /* Ensure it stays above other content */
+        }
+
+        .header a {
+            color: #006F5B;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .header a:hover {
+            text-decoration: underline;
+        }
+
+        .page-content {
+            width: 100%;
+            max-width: 600px;
+            margin: 80px auto 0; /* Add top margin to avoid overlapping with fixed header */
+            padding: 20px;
+            background-color: #B0A398;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .form-section label {
+            display: block;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .form-section input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-section button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-section button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Header Section -->
+    <div class="header">
+        <span style="color:white;">DontEvenTalkToMe</span>
+        <a href="/">Home🏠</a>
+    </div>
+
+    <!-- Page Content Section -->
+    <div class="page-content">
+        <!-- HTML Form for Discord Webhook -->
+        <div class="html-form form-section">
+            <h1>Discord Webhook Messenger</h1>
+            <div>
+                <label for="message">Message:</label>
+                <input type="text" id="message" placeholder="Enter your message">
+            </div>
+            <div>
+                <br>
+                <label for="username-input">Username (Optional):</label>
+                <input type="text" id="username-input" placeholder="Enter username">
+            </div>
+            <div>
+                <br>
+                <label for="avatar">Avatar URL (Optional):</label>
+                <input type="text" id="avatar" placeholder="Enter avatar URL">
+            </div>
+            <div>
+                <br>
+                <label for="webhook">Webhook URL:</label>
+                <input type="text" id="webhook" placeholder="Enter webhook URL">
+            </div>
+            <br>
+            <button onclick="submitForm()">Submit</button>
+        </div>
+    </div>
+
+    <script>
+        function submitForm() {
+            var message = document.getElementById('message').value;
+            var username = document.getElementById('username-input').value;
+            var avatar = document.getElementById('avatar').value;
+            var webhook = document.getElementById('webhook').value;
+
+            var webhookUrl = webhook.trim();
+            if (!webhookUrl) {
+                alert('Please enter a valid webhook URL.');
+                return;
+            }
+
+            var data = {
+                content: message,
+                username: username || undefined,
+                avatar_url: avatar || 'https://i.ibb.co/xS9JG53/OIP.jpg' // Default avatar URL
+            };
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', webhookUrl, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    // Clear form fields after successful submission
+                    document.getElementById('message').value = '';
+                } else {
+                    alert('Failed to send message. Status code: ' + xhr.status);
+                }
+            };
+
+            xhr.onerror = function () {
+                alert('Failed to send message. Please check your network connection and try again.');
+            };
+
+            xhr.send(JSON.stringify(data));
+        }
+    </script>
+</body>
+</html>
