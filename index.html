@@ -13,21 +13,23 @@
             background: linear-gradient(to bottom, #003D32, #045720); /* Gradient background */
             height: 100vh; /* Ensure full height gradient */
             margin: 0; /* Remove default margin */
-            display: flex;
-            justify-content: center; /* Center the flex container horizontally */
-            align-items: flex-start; /* Align the flex items to the top */
+            padding-top: 20px; /* Add padding to avoid overlapping with the header */
+            box-sizing: border-box; /* Include padding in height/width calculations */
         }
 
         .container {
-            width: 100%;
-            max-width: 10000px; /* Optional: limit the maximum width of the container */
+            max-width: auto;
             display: flex;
             justify-content: space-between; /* Spread items across the container */
             align-items: center; /* Vertically center items */
             padding: 20px;
             background-color: #B0A398;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin-top: 0px; /* Optional: add some space from the top */
+            position: fixed; /* Fix header to the top of the page */
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000; /* Ensure header stays on top */
         }
 
         .container a {
@@ -39,6 +41,8 @@
         .container a:hover {
             text-decoration: underline; /* Underline on hover */
         }
+
+        /* Add padding to the content area to ensure it doesn't overlap with the fixed header */
     </style>
 </head>
 <body>
@@ -46,5 +50,6 @@
         <span>DontEvenTalkToMe ||</span>
         <a href="/webhook">Webhook🔗</a> 
     </div>
+<h1 style="padding:20px; margin-top: 50px;"><span style="color:white">Hola soy</span> <span style="color:tomato">DontEvenTalkToMe!</span></h1>
 </body>
 </html>
